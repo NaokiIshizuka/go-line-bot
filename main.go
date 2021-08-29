@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/NaokiIshizuka/line-bot/weather"
 	"github.com/line/line-bot-sdk-go/linebot"
 	"log"
 	"os"
@@ -17,8 +18,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// テキストメッセージを生成する
-	message := linebot.NewTextMessage("hello, world")
+
+	// weatherパッケージパッケージから天気情報の文字列をを取得する
+	result := weather.GetWeather()
+	message := linebot.NewTextMessage(result)
+
 	// テキストメッセージを友達登録しているユーザー全員に配信する
 	if _, err := bot.BroadcastMessage(message).Do(); err != nil {
 		log.Fatal(err)
